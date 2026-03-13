@@ -1,7 +1,12 @@
-//
 //  APIError.swift
-//  
-//
-//  Created by Roman on 13.03.26.
-//
 
+import Foundation
+
+enum APIError: Error {
+    
+    case invalidURL
+    case invalidResponse
+    case decodingFailed
+    case network(Error)
+    case unknown
+}
