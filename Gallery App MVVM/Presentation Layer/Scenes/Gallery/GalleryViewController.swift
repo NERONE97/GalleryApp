@@ -1,7 +1,12 @@
-//
 //  GalleryViewController.swift
-//  
-//
-//  Created by Roman on 13.03.26.
-//
 
+import UIKit
+
+class GalleryViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .systemOrange
+        
+    }
+}
