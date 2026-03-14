@@ -4,6 +4,8 @@ import UIKit
 
 final class GalleryViewController: UIViewController {
     
+    private let viewModel = GalleryViewModel()
+    
     private lazy var collectionView: UICollectionView = {
         let layout = createLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -13,11 +15,12 @@ final class GalleryViewController: UIViewController {
         return collectionView
     }()
     
-    private let mockItemsCount = 30
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupViewModel()
+        viewModel.loadPhotos()
+        
     }
     
     private func setupUI() {
@@ -35,9 +38,14 @@ final class GalleryViewController: UIViewController {
         ])
     }
     
+    private func setupViewModel() {
+        viewModel.delegate = self
+    }
+    
+    
     private func createLayout() -> UICollectionViewLayout {
         let spacing: CGFloat = 12
-        let itemsPerRow: CGFloat = 2
+        let itemsPerRow: CGFloat = 3
         
         let totalSpacing = spacing * (itemsPerRow - 1)
         let availableWidth = UIScreen.main.bounds.width - 24 - totalSpacing
@@ -58,7 +66,7 @@ final class GalleryViewController: UIViewController {
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
             subitem: item,
-            count: 2
+            count: 3
         )
         group.interItemSpacing = .fixed(spacing)
         
@@ -67,12 +75,29 @@ final class GalleryViewController: UIViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "ok", style: .default))
+        present(alert, animated: true)
+    }
+}
+
+extension GalleryViewController: GalleryViewModelDelegate {
+    
+    func didLoadPhotos() {
+        collectionView.reloadData()
+    }
+    
+    func didFailLoading(with error: APIError) {
+        showErrorAlert(message: "\(error)")
+    }
 }
 
 extension GalleryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        mockItemsCount
+        viewModel.numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,12 +108,12 @@ extension GalleryViewController: UICollectionViewDataSource {
         ) as? GalleryCell else {
             return UICollectionViewCell()
         }
-        
-        cell.configurePlaceholder()
+
+        cell.configure(with: nil)
         return cell
     }
 }
 
 #Preview {
-        GalleryViewController()
+    GalleryViewController()
 }
