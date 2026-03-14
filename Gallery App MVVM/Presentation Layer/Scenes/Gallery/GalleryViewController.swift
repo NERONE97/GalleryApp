@@ -123,8 +123,17 @@ extension GalleryViewController: UICollectionViewDataSource {
 }
 
 extension GalleryViewController: UICollectionViewDelegate {
+    // Пагинация
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         viewModel.loadMorePhotosIfPossible(currentIndex: indexPath.item)
+    }
+    
+    // Переход на Детали изображения
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let photo = viewModel.photo(at: indexPath.item)
+        let viewModel = ImageDetailViewModel(photo: photo)
+        let viewController = ImageDetailViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
