@@ -42,7 +42,6 @@ final class GalleryViewController: UIViewController {
         viewModel.delegate = self
     }
     
-    
     private func createLayout() -> UICollectionViewLayout {
         let spacing: CGFloat = 12
         let itemsPerRow: CGFloat = 3
@@ -109,7 +108,15 @@ extension GalleryViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
+        // Подстановка фото
+        let photo = viewModel.photo(at: indexPath.item)
         cell.configure(with: nil)
+        
+        // URL img c Model -> ImageLoader
+        ImageLoader.shared.loadImage(from: photo.urls.thumb) { image in
+            cell.configure(with: image)
+        }
+        
         return cell
     }
 }
