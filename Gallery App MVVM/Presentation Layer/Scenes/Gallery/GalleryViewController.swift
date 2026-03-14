@@ -12,6 +12,7 @@ final class GalleryViewController: UIViewController {
         collectionView.backgroundColor = .systemBackground
         collectionView.register(GalleryCell.self, forCellWithReuseIdentifier: GalleryCell.identifier)
         collectionView.dataSource = self
+        collectionView.delegate = self
         return collectionView
     }()
     
@@ -61,7 +62,7 @@ final class GalleryViewController: UIViewController {
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .absolute(itemWidth * 1.2)
         )
-        
+        // TO-DO: Фиксануть horizontal(layoutSize:subitem:count:)' was deprecated in iOS 16.0
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
             subitem: item,
@@ -118,6 +119,12 @@ extension GalleryViewController: UICollectionViewDataSource {
         }
         
         return cell
+    }
+}
+
+extension GalleryViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        viewModel.loadMorePhotosIfPossible(currentIndex: indexPath.item)
     }
 }
 

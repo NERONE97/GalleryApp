@@ -14,25 +14,49 @@ final class GalleryViewModel {
     private let apiService: APIServiceProtocol
     private(set) var photos: [Photo] = []
     
+    private var currentPage = 1
+    private let perPage = 30
+    private var isLoading = false
+    private var hasMorePages = true
+    
     init(apiService: APIServiceProtocol = APIService()) {
         self.apiService = apiService
     }
     
     func loadPhotos() {
-        apiService.fetchPhotos(page: 1, perPage: 30) { [weak self] result in
+        
+        guard !isLoading else { return }
+        isLoading = true
+        
+        apiService.fetchPhotos(page: currentPage, perPage: perPage) { [weak self] result in
             guard let self else { return }
             
             DispatchQueue.main.async {
+                self.isLoading = false
+                
                 switch result {
-                case let .success(photos):
-                    self.photos = photos
-                    self.delegate?.didLoadPhotos()
-                    
-                case let .failure(error):
-                    self.delegate?.didFailLoading(with: error)
+                    case let .success(newPhotos):
+                        if newPhotos.count < self.perPage {
+                            self.hasMorePages = false
+                        }
+                        
+                        self.photos.append(contentsOf: newPhotos)
+                        self.delegate?.didLoadPhotos()
+                        
+                    case let .failure(error):
+                        self.delegate?.didFailLoading(with: error)
                 }
             }
         }
+    }
+    
+    func loadMorePhotosIfPossible(currentIndex: Int) {
+        // Зазор
+        let indexOfScreenEnding = photos.count - 10
+        
+        guard currentIndex >= indexOfScreenEnding,!isLoading, hasMorePages else { return }
+        currentPage += 1
+        loadPhotos()
     }
     
     func photo(at index: Int) -> Photo {
