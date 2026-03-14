@@ -28,9 +28,9 @@ final class GalleryCell: UICollectionViewCell {
         super.prepareForReuse()
         imageView.image = nil
     }
-    
-    func configurePlaceholder() {
-        imageView.image = nil
+    // plchld -> real img
+    func configure(with image: UIImage?) {
+        imageView.image = image
     }
     
     private func setupUI() {
