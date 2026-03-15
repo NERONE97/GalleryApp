@@ -59,6 +59,7 @@ final class ImageDetailViewController: UIViewController {
         setupUI()
         configureContent()
         loadImage()
+        updateFavouriteButton()
     }
     
     private func setupUI() {
@@ -115,14 +116,21 @@ final class ImageDetailViewController: UIViewController {
     private func loadImage() {
         ImageLoader.shared.loadImage(from: viewModel.imageURL) { [weak self] image in
             self?.imageView.image = image
+            print("Подгрузкаююю")
         }
+    }
+    
+    private func updateFavouriteButton() {
+        let imageName = viewModel.isFavourite ? "heart.fill" : "heart"
+        favoriteButton.image = UIImage(systemName: imageName)
+        print("Избранное: \(viewModel.isFavourite)")
     }
     
     @objc
       private func tapFavoriteButton() {
-          let isFilled = favoriteButton.image == UIImage(systemName: "heart.fill")
-          let imageName = isFilled ? "heart" : "heart.fill"
-          favoriteButton.image = UIImage(systemName: imageName)
+          _ = viewModel.toggleFavourite()
+          updateFavouriteButton()
+          print("Кнопка <3 нажата")
       }
 }
 

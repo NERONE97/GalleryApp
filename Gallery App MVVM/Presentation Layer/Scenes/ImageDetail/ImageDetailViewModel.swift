@@ -5,10 +5,16 @@ import Foundation
 final class ImageDetailViewModel {
     
     private let photo: Photo
+    private let favouritesService: FavouritesService
     
-    init(photo: Photo) {
+    init(photo: Photo, favouritesService: FavouritesService) {
         self.photo = photo
+        self.favouritesService = favouritesService
     }
+    
+    var isFavourite: Bool {
+           favouritesService.isFavourite(photoId: photo.id)
+       }
     
     var imageURL: String {
         photo.urls.regular
@@ -33,4 +39,14 @@ final class ImageDetailViewModel {
         
         return user.name
     }
+    
+    func toggleFavourite() -> Bool {
+            if isFavourite {
+                favouritesService.remove(photoId: photo.id)
+                return false
+            } else {
+                favouritesService.save(photo: photo)
+                return true
+            }
+        }
 }

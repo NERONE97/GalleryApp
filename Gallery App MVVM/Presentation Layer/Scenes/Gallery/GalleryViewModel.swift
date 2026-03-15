@@ -13,14 +13,16 @@ final class GalleryViewModel {
     
     private let apiService: APIServiceProtocol
     private(set) var photos: [Photo] = []
+    private let favouritesService: FavouritesService
     
     private var currentPage = 1
     private let perPage = 30
     private var isLoading = false
     private var hasMorePages = true
     
-    init(apiService: APIServiceProtocol = APIService()) {
+    init(apiService: APIServiceProtocol = APIService(), favouritesService: FavouritesService = FavouritesService()) {
         self.apiService = apiService
+        self.favouritesService = favouritesService
     }
     
     func loadPhotos() {
@@ -66,4 +68,9 @@ final class GalleryViewModel {
     var numberOfItems: Int {
         photos.count
     }
+    
+    func isFavourite(at index: Int) -> Bool {
+         let photo = photos[index]
+         return favouritesService.isFavourite(photoId: photo.id)
+     }
 }

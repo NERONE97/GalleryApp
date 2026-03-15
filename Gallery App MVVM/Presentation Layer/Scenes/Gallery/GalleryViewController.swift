@@ -5,6 +5,7 @@ import UIKit
 final class GalleryViewController: UIViewController {
     
     private let viewModel = GalleryViewModel()
+    private let favouritesService = FavouritesService()
     
     private lazy var collectionView: UICollectionView = {
         let layout = createLayout()
@@ -21,11 +22,15 @@ final class GalleryViewController: UIViewController {
         setupUI()
         setupViewModel()
         viewModel.loadPhotos()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.reloadData()
     }
     
     private func setupUI() {
-        title = "Gallery"
+        title = "Галерея"
         view.backgroundColor = .systemBackground
         
         view.addSubview(collectionView)
@@ -111,11 +116,13 @@ extension GalleryViewController: UICollectionViewDataSource {
 
         // Подстановка фото
         let photo = viewModel.photo(at: indexPath.item)
-        cell.configure(with: nil)
+        let isFavourite = viewModel.isFavourite(at: indexPath.item)
+        cell.configure(with: nil, isFavourite: isFavourite)
         
         // URL img c Model -> ImageLoader
         ImageLoader.shared.loadImage(from: photo.urls.thumb) { image in
-            cell.configure(with: image)
+            let isFavourite = self.viewModel.isFavourite(at: indexPath.item)
+            cell.configure(with: image, isFavourite: isFavourite)
         }
         
         return cell
@@ -131,7 +138,7 @@ extension GalleryViewController: UICollectionViewDelegate {
     // Переход на Детали изображения
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let photo = viewModel.photo(at: indexPath.item)
-        let viewModel = ImageDetailViewModel(photo: photo)
+        let viewModel = ImageDetailViewModel(photo: photo, favouritesService: favouritesService)
         let viewController = ImageDetailViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }
