@@ -18,9 +18,7 @@ final class GalleryCell: UICollectionViewCell {
     private let favouriteIconView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "heart.fill"))
         imageView.tintColor = .red
-        imageView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.8)
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
+        imageView.backgroundColor = .clear 
         imageView.contentMode = .scaleAspectFit
         imageView.isHidden = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
