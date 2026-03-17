@@ -143,7 +143,16 @@ extension GalleryViewController: UICollectionViewDelegate {
             favouritesService: favouritesService
         )
         let viewController = ImageDetailViewController(viewModel: viewModel)
-        navigationController?.pushViewController(viewController, animated: true)
+        //navigationController?.pushViewController(viewController, animated: true)
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.modalPresentationStyle = .pageSheet
+        
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        
+        present(navController, animated: true)
     }
 }
 

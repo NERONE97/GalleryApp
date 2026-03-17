@@ -70,6 +70,12 @@ final class ImageDetailViewController: UIViewController {
         navigationItem.rightBarButtonItem = favoriteButton
         favoriteButton.tintColor = .red
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .close,
+            target: self,
+            action: #selector(closeScreen)
+        )
+        
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -136,13 +142,17 @@ final class ImageDetailViewController: UIViewController {
           print("Кнопка <3 нажата")
       }
     
+    @objc
+    private func closeScreen() {
+        dismiss(animated: true)
+    }
+    
     private func setupGestures() {
         view.isUserInteractionEnabled = true
-        imageView.isUserInteractionEnabled = true
         
         let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft))
         swipeLeft.direction = .left
-        imageView.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeLeft)
         
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRight))
         swipeRight.direction = .right
