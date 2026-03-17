@@ -137,8 +137,11 @@ extension GalleryViewController: UICollectionViewDelegate {
     
     // Переход на Детали изображения
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let photo = viewModel.photo(at: indexPath.item)
-        let viewModel = ImageDetailViewModel(photo: photo, favouritesService: favouritesService)
+        let viewModel = ImageDetailViewModel(
+            photosArray: viewModel.photos,
+            initialIndex: indexPath.item,
+            favouritesService: favouritesService
+        )
         let viewController = ImageDetailViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }

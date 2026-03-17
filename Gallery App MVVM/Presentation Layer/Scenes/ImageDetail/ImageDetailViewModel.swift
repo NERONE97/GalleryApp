@@ -4,28 +4,42 @@ import Foundation
 
 final class ImageDetailViewModel {
     
-    private let photo: Photo
+    private let photosArray: [Photo]
     private let favouritesService: FavouritesService
+    private var currentIndex: Int
     
-    init(photo: Photo, favouritesService: FavouritesService) {
-        self.photo = photo
+    init(photosArray: [Photo], initialIndex: Int, favouritesService: FavouritesService) {
+        self.photosArray = photosArray
+        self.currentIndex = initialIndex
         self.favouritesService = favouritesService
     }
+// Блок свайпов
+    private var currentPhoto: Photo {
+          photosArray[currentIndex]
+      }
     
+    var canShowPrevious: Bool {
+        currentIndex > 0
+    }
+    
+    var canShowNext: Bool {
+        currentIndex < photosArray.count - 1
+    }
+
     var isFavourite: Bool {
-           favouritesService.isFavourite(photoId: photo.id)
+           favouritesService.isFavourite(photoId: currentPhoto.id)
        }
     
     var imageURL: String {
-        photo.urls.regular
+        currentPhoto.urls.regular
     }
     
     var titleText: String {
-        if let description = photo.description, !description.isEmpty {
+        if let description = currentPhoto.description, !description.isEmpty {
             return description
         }
         
-        if let altDescription = photo.altDescription, !altDescription.isEmpty {
+        if let altDescription = currentPhoto.altDescription, !altDescription.isEmpty {
             return altDescription
         }
         
@@ -33,7 +47,7 @@ final class ImageDetailViewModel {
     }
     
     var authorText: String {
-        guard let user = photo.user else {
+        guard let user = currentPhoto.user else {
             return "Неизвестный автор"
         }
         
@@ -42,11 +56,23 @@ final class ImageDetailViewModel {
     
     func toggleFavourite() -> Bool {
             if isFavourite {
-                favouritesService.remove(photoId: photo.id)
+                favouritesService.remove(photoId: currentPhoto.id)
                 return false
             } else {
-                favouritesService.save(photo: photo)
+                favouritesService.save(photo: currentPhoto)
                 return true
             }
         }
+    
+    func showNext() -> Bool {
+        guard canShowNext else { return false }
+        currentIndex += 1
+        return true
+    }
+    
+    func showPrevious() -> Bool {
+        guard canShowPrevious else { return false }
+        currentIndex -= 1
+        return true
+    }
 }

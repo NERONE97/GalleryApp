@@ -60,6 +60,7 @@ final class ImageDetailViewController: UIViewController {
         configureContent()
         loadImage()
         updateFavouriteButton()
+        setupGestures()
     }
     
     private func setupUI() {
@@ -115,7 +116,9 @@ final class ImageDetailViewController: UIViewController {
     
     private func loadImage() {
         ImageLoader.shared.loadImage(from: viewModel.imageURL) { [weak self] image in
-            self?.imageView.image = image
+            DispatchQueue.main.async {
+                    self?.imageView.image = image
+                }
             print("Подгрузкаююю")
         }
     }
@@ -132,5 +135,36 @@ final class ImageDetailViewController: UIViewController {
           updateFavouriteButton()
           print("Кнопка <3 нажата")
       }
+    
+    private func setupGestures() {
+        view.isUserInteractionEnabled = true
+        imageView.isUserInteractionEnabled = true
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeft))
+        swipeLeft.direction = .left
+        imageView.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRight))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc
+    private func handleSwipeLeft() {
+        guard viewModel.showNext() else { return }
+        refreshContent()
+    }
+
+    @objc
+    private func handleSwipeRight() {
+        guard viewModel.showPrevious() else { return }
+        refreshContent()
+    }
+    
+    private func refreshContent() {
+        configureContent()
+        loadImage()
+        updateFavouriteButton()
+    }
 }
 
