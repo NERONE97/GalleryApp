@@ -161,22 +161,73 @@ final class ImageDetailViewController: UIViewController {
         view.addGestureRecognizer(swipeRight)
     }
     
+    private enum SwipeDirection {
+        case left
+        case right
+    }
+    
     @objc
     private func handleSwipeLeft() {
         guard viewModel.showNext() else { return }
-        refreshContent()
+        refreshContent(direction: .left)
     }
 
     @objc
     private func handleSwipeRight() {
         guard viewModel.showPrevious() else { return }
-        refreshContent()
+        refreshContent(direction: .right)
     }
     
-    private func refreshContent() {
-        configureContent()
-        loadImage()
-        updateFavouriteButton()
+    private func refreshContent(direction: SwipeDirection) {
+        let outgoingOffset: CGFloat = direction == .left ? -120 : 120
+        let incomingOffset: CGFloat = direction == .left ? 120 : -120
+        
+        let animatedViews: [UIView] = [imageView, titleLabel, authorLabel]
+        
+        UIView.animate(
+            withDuration: 0.18,
+            delay: 0,
+            options: [.curveEaseIn],
+            animations: {
+                animatedViews.forEach { view in
+                    view.transform = CGAffineTransform(translationX: outgoingOffset, y: 0)
+                        .scaledBy(x: 0.92, y: 0.92)
+                    view.alpha = 0
+                }
+            },
+            completion: { _ in
+                self.configureContent()
+                self.updateFavouriteButton()
+                
+                self.imageView.image = nil
+                self.loadImage()
+                
+                animatedViews.forEach { view in
+                    view.transform = CGAffineTransform(translationX: incomingOffset, y: 0)
+                        .scaledBy(x: 1.04, y: 1.04)
+                }
+                
+                UIView.animate(
+                    withDuration: 0.28,
+                    delay: 0,
+                    usingSpringWithDamping: 0.86,
+                    initialSpringVelocity: 0.6,
+                    options: [.curveEaseOut],
+                    animations: {
+                        animatedViews.forEach { view in
+                            view.transform = .identity
+                            view.alpha = 1
+                        }
+                    }
+                )
+            }
+        )
     }
+    
+//    private func refreshContent() {
+//        configureContent()
+//        loadImage()
+//        updateFavouriteButton()
+//    }
 }
 
