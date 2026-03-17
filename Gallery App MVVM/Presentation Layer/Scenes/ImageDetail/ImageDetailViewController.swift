@@ -8,6 +8,7 @@ final class ImageDetailViewController: UIViewController {
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
+    var favInSheetChanged: (() -> Void)?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -140,6 +141,7 @@ final class ImageDetailViewController: UIViewController {
           _ = viewModel.toggleFavourite()
           updateFavouriteButton()
           print("Кнопка <3 нажата")
+          favInSheetChanged?()
       }
     
     @objc

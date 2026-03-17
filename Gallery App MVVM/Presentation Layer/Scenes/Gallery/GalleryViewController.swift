@@ -137,13 +137,17 @@ extension GalleryViewController: UICollectionViewDelegate {
     
     // Переход на Детали изображения
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let viewModel = ImageDetailViewModel(
+        let detailViewModel = ImageDetailViewModel(
             photosArray: viewModel.photos,
             initialIndex: indexPath.item,
             favouritesService: favouritesService
         )
-        let viewController = ImageDetailViewController(viewModel: viewModel)
-        //navigationController?.pushViewController(viewController, animated: true)
+        
+        let viewController = ImageDetailViewController(viewModel: detailViewModel)
+        viewController.favInSheetChanged = { [weak self] in
+            self?.collectionView.reloadData()
+        }
+        
         let navController = UINavigationController(rootViewController: viewController)
         navController.modalPresentationStyle = .pageSheet
         
