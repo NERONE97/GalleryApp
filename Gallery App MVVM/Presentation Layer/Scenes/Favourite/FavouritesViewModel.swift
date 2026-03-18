@@ -8,6 +8,24 @@ struct FavouriteItem {
     let author: String
     let thumbURL: String
     let regularURL: String
+    let altDescription: String?
+    
+    var asPhoto: Photo {
+        Photo(
+            id: id,
+            description: title,
+            altDescription: altDescription,
+            urls: PhotoURLs(
+                thumb: thumbURL,
+                small: thumbURL,
+                regular: regularURL
+            ),
+            user: PhotoUser(
+                name: author,
+                username: author
+            )
+        )
+    }
 }
 
 final class FavouritesViewModel {
@@ -27,7 +45,8 @@ final class FavouritesViewModel {
                 title: $0.photoDescription?.isEmpty == false ? ($0.photoDescription ?? "") : ($0.altDescription ?? "Неизвестное фото"),
                 author: $0.authorName ?? "Неизвестный автор",
                 thumbURL: $0.thumbUrl ?? "",
-                regularURL: $0.regularUrl ?? ""
+                regularURL: $0.regularUrl ?? "",
+                altDescription: $0.altDescription
             )
         }
     }
@@ -44,5 +63,9 @@ final class FavouritesViewModel {
     
     var numberOfItems: Int {
         items.count
+    }
+    
+    var photos: [Photo] {
+        items.map {$0.asPhoto}
     }
 }
