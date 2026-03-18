@@ -17,7 +17,9 @@ class TabBarController: UITabBarController {
         let favouritesViewController = FavouritesViewController()
         let favouritesNavController = UINavigationController(rootViewController: favouritesViewController)
         favouritesNavController.tabBarItem.title = "Избранное"
-        favouritesNavController.tabBarItem.image = UIImage(systemName: "heart.fill")
+        favouritesNavController.tabBarItem.image = UIImage(systemName: "heart")
+        favouritesNavController.tabBarItem.selectedImage = UIImage(systemName: "heart.fill")?.withTintColor(.systemRed, renderingMode: .alwaysOriginal)
+        
 
         viewControllers = [galleryNavController, favouritesNavController]
     }
