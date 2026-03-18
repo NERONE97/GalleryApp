@@ -58,6 +58,7 @@ final class ImageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupNavigation()
         configureContent()
         loadImage()
         updateFavouriteButton()
@@ -67,15 +68,6 @@ final class ImageDetailViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = .systemBackground
         title = "Детали фото"
-        
-        navigationItem.rightBarButtonItem = favoriteButton
-        favoriteButton.tintColor = .red
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .close,
-            target: self,
-            action: #selector(closeScreen)
-        )
         
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -114,6 +106,22 @@ final class ImageDetailViewController: UIViewController {
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             authorLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -24)
         ])
+    }
+    
+    private func setupNavigation() {
+        navigationItem.rightBarButtonItem = favoriteButton
+        favoriteButton.tintColor = .red
+
+        let isPresentedModally = presentingViewController != nil ||
+            navigationController?.presentingViewController != nil
+
+        if isPresentedModally {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                barButtonSystemItem: .close,
+                target: self,
+                action: #selector(closeScreen)
+            )
+        }
     }
     
     private func configureContent() {
@@ -223,11 +231,5 @@ final class ImageDetailViewController: UIViewController {
             }
         )
     }
-    
-//    private func refreshContent() {
-//        configureContent()
-//        loadImage()
-//        updateFavouriteButton()
-//    }
 }
 
