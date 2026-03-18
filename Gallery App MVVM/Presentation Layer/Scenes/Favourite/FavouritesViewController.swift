@@ -1,11 +1,23 @@
-//  GalleryViewController.swift
+//  FavouritesViewController.swift
 
 import UIKit
 
-final class GalleryViewController: UIViewController {
+final class FavouritesViewController: UIViewController {
     
-    private let viewModel = GalleryViewModel()
+    private let viewModel = FavouritesViewModel()
     private let favouritesService = FavouritesService()
+    
+    private let emptyStateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Нет избранных изображений"
+        label.textAlignment = .center
+        label.textColor = .secondaryLabel
+        label.font = .preferredFont(forTextStyle: .body)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        return label
+    }()
     
     private lazy var collectionView: UICollectionView = {
         let layout = createLayout()
@@ -14,38 +26,46 @@ final class GalleryViewController: UIViewController {
         collectionView.register(GalleryCell.self, forCellWithReuseIdentifier: GalleryCell.identifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupViewModel()
-        viewModel.loadPhotos()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        collectionView.reloadData()
+        viewModel.loadFavourites()
+        updateUI()
     }
     
     private func setupUI() {
-        title = "Галерея"
+        title = "Избранное"
         view.backgroundColor = .systemBackground
         
         view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(emptyStateLabel)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -12),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            emptyStateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            emptyStateLabel.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 24),
+            emptyStateLabel.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -24)
         ])
     }
     
-    private func setupViewModel() {
-        viewModel.delegate = self
+    private func updateUI() {
+        let isEmpty = viewModel.numberOfItems == 0
+        emptyStateLabel.isHidden = !isEmpty
+        collectionView.isHidden = isEmpty
+        collectionView.reloadData()
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -80,74 +100,51 @@ final class GalleryViewController: UIViewController {
         
         return UICollectionViewCompositionalLayout(section: section)
     }
-    
-    private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "ok", style: .default))
-        present(alert, animated: true)
-    }
 }
 
-extension GalleryViewController: GalleryViewModelDelegate {
-    
-    func didLoadPhotos() {
-        collectionView.reloadData()
-    }
-    
-    func didFailLoading(with error: APIError) {
-        showErrorAlert(message: "\(error)")
-    }
-}
+extension FavouritesViewController: UICollectionViewDataSource {
 
-extension GalleryViewController: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.numberOfItems
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // Переиспользование
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: GalleryCell.identifier,
-            for: indexPath
-        ) as? GalleryCell else {
-            return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell( withReuseIdentifier: GalleryCell.identifier,for: indexPath) as? GalleryCell else { return UICollectionViewCell()
         }
 
-        // Подстановка фото
-        let photo = viewModel.photo(at: indexPath.item)
-        let isFavourite = viewModel.isFavourite(at: indexPath.item)
-        cell.configure(with: nil, isFavourite: isFavourite)
-        
-        // URL img c Model -> ImageLoader
-        ImageLoader.shared.loadImage(from: photo.urls.thumb) { image in
-            let isFavourite = self.viewModel.isFavourite(at: indexPath.item)
-            cell.configure(with: image, isFavourite: isFavourite)
+        let item = viewModel.item(at: indexPath.item)
+        cell.configure(with: nil, isFavourite: true)
+
+        ImageLoader.shared.loadImage(from: item.thumbURL) { [weak collectionView] image in
+            DispatchQueue.main.async {
+                guard
+                    let currentCell = collectionView?.cellForItem(at: indexPath) as? GalleryCell
+                else { return }
+
+                currentCell.configure(with: image, isFavourite: true)
+            }
         }
-        
+
         return cell
     }
 }
 
-extension GalleryViewController: UICollectionViewDelegate {
-    // Пагинация
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        viewModel.loadMorePhotosIfPossible(currentIndex: indexPath.item)
-    }
-    
-    // Переход на Детали изображения
+extension FavouritesViewController: UICollectionViewDelegate {
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailViewModel = ImageDetailViewModel(
             photosArray: viewModel.photos,
             initialIndex: indexPath.item,
             favouritesService: favouritesService
         )
-        
+
         let viewController = ImageDetailViewController(viewModel: detailViewModel)
         viewController.favInSheetChanged = { [weak self] in
-            self?.collectionView.reloadData()
+            self?.viewModel.loadFavourites()
+            self?.updateUI()
         }
-        
+
+//        navigationController?.pushViewController(viewController, animated: true)
         let navController = UINavigationController(rootViewController: viewController)
         navController.modalPresentationStyle = .pageSheet
         
@@ -158,8 +155,21 @@ extension GalleryViewController: UICollectionViewDelegate {
         
         present(navController, animated: true)
     }
+
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
+            let delete = UIAction(
+                title: "Удалить из избранного",
+                image: UIImage(systemName: "trash"),
+                attributes: .destructive
+            ) { _ in
+                guard let self else { return }
+                self.viewModel.removeFavourite(at: indexPath.item)
+                self.updateUI()
+            }
+
+            return UIMenu(title: "Опции:", children: [delete])
+        }
+    }
 }
 
-#Preview {
-    GalleryViewController()
-}
