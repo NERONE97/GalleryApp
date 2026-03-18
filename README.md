@@ -75,13 +75,12 @@ https://unsplash.com/developers
 в файл: Gallery App MVVM/Business Layer/Networking/APIService.swift
 в переменную: private let accessKey = "ВАШ КЛЮЧ" (Не забудь про " ")
 ```
-
-# Скриншоты
-<img width="300" height="655" alt="Simulator Screenshot - iPhone 17 - 2026-03-18 at 17 06 28" src="https://github.com/user-attachments/assets/68954295-9712-41a5-aa1e-53fe8eccdbbb" />
-
-<img width="300" height="655" alt="Simulator Screenshot - iPhone 17 - 2026-03-18 at 17 06 36" src="https://github.com/user-attachments/assets/2bc9d7cd-5216-4a27-a751-9d3ef434b478" />
-
-<img width="300" height="655" alt="Simulator Screenshot - iPhone 17 - 2026-03-18 at 17 06 22" src="https://github.com/user-attachments/assets/fb36184f-d1ed-4460-82af-320af1568372" />
+## Скриншоты
+| Название страницы:| Скриншот                                                        |
+| ----------------- | ------------------------------------------------------------------ |
+| Галерея | <img width="200" height="450" alt="Simulator Screenshot - iPhone 17 - 2026-03-18 at 17 06 28" src="https://github.com/user-attachments/assets/68954295-9712-41a5-aa1e-53fe8eccdbbb" /> |
+| Детали фото | <img width="200" height="450" alt="Simulator Screenshot - iPhone 17 - 2026-03-18 at 17 06 36" src="https://github.com/user-attachments/assets/2bc9d7cd-5216-4a27-a751-9d3ef434b478" /> |
+| Избранное | <img width="200" height="450" alt="Simulator Screenshot - iPhone 17 - 2026-03-18 at 17 06 22" src="https://github.com/user-attachments/assets/fb36184f-d1ed-4460-82af-320af1568372" /> |
 
 
 
