@@ -56,7 +56,7 @@ Domain (Models / Use-cases abstraction)
         ↓
 Data Layer (API / Persistence / Services)
 ```
-# Как запустить:
+## Как запустить:
 1. Скопировать репозиторий
 ```bash
 git clone https://github.com/NERONE97/GalleryApp
