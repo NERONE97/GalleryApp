@@ -168,7 +168,7 @@ extension FavouritesViewController: UICollectionViewDelegate {
                 self.updateUI()
             }
 
-            return UIMenu(title: "", children: [delete])
+            return UIMenu(title: "Опции:", children: [delete])
         }
     }
 }

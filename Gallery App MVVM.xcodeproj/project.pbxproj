@@ -6,7 +6,26 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		1643C7742F6AC7190063DF6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16ED66372F6456080088248C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16ED663E2F6456080088248C;
+			remoteInfo = "Gallery App MVVM";
+		};
+		1643C7852F6AD0C50063DF6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 16ED66372F6456080088248C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16ED663E2F6456080088248C;
+			remoteInfo = "Gallery App MVVM";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1643C7702F6AC7190063DF6D /* testAddToFav.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testAddToFav.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1643C7812F6AD0C50063DF6D /* TabBarTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabBarTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		16ED663F2F6456080088248C /* Gallery App MVVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gallery App MVVM.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -21,6 +40,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		1643C7822F6AD0C50063DF6D /* TabBarTest */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TabBarTest;
+			sourceTree = "<group>";
+		};
 		16ED66412F6456080088248C /* Gallery App MVVM */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -32,6 +56,20 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1643C76D2F6AC7190063DF6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1643C77E2F6AD0C50063DF6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		16ED663C2F6456080088248C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -46,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				16ED66412F6456080088248C /* Gallery App MVVM */,
+				1643C7822F6AD0C50063DF6D /* TabBarTest */,
 				16ED66402F6456080088248C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				16ED663F2F6456080088248C /* Gallery App MVVM.app */,
+				1643C7702F6AC7190063DF6D /* testAddToFav.xctest */,
+				1643C7812F6AD0C50063DF6D /* TabBarTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,6 +102,49 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1643C76F2F6AC7190063DF6D /* testAddToFav */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1643C7762F6AC7190063DF6D /* Build configuration list for PBXNativeTarget "testAddToFav" */;
+			buildPhases = (
+				1643C76C2F6AC7190063DF6D /* Sources */,
+				1643C76D2F6AC7190063DF6D /* Frameworks */,
+				1643C76E2F6AC7190063DF6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1643C7752F6AC7190063DF6D /* PBXTargetDependency */,
+			);
+			name = testAddToFav;
+			packageProductDependencies = (
+			);
+			productName = testAddToFav;
+			productReference = 1643C7702F6AC7190063DF6D /* testAddToFav.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1643C7802F6AD0C50063DF6D /* TabBarTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1643C7872F6AD0C50063DF6D /* Build configuration list for PBXNativeTarget "TabBarTest" */;
+			buildPhases = (
+				1643C77D2F6AD0C50063DF6D /* Sources */,
+				1643C77E2F6AD0C50063DF6D /* Frameworks */,
+				1643C77F2F6AD0C50063DF6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1643C7862F6AD0C50063DF6D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				1643C7822F6AD0C50063DF6D /* TabBarTest */,
+			);
+			name = TabBarTest;
+			packageProductDependencies = (
+			);
+			productName = TabBarTest;
+			productReference = 1643C7812F6AD0C50063DF6D /* TabBarTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		16ED663E2F6456080088248C /* Gallery App MVVM */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 16ED66552F6456090088248C /* Build configuration list for PBXNativeTarget "Gallery App MVVM" */;
@@ -93,6 +177,14 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					1643C76F2F6AC7190063DF6D = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 16ED663E2F6456080088248C;
+					};
+					1643C7802F6AD0C50063DF6D = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 16ED663E2F6456080088248C;
+					};
 					16ED663E2F6456080088248C = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -113,11 +205,27 @@
 			projectRoot = "";
 			targets = (
 				16ED663E2F6456080088248C /* Gallery App MVVM */,
+				1643C76F2F6AC7190063DF6D /* testAddToFav */,
+				1643C7802F6AD0C50063DF6D /* TabBarTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1643C76E2F6AC7190063DF6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1643C77F2F6AD0C50063DF6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		16ED663D2F6456080088248C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,6 +236,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1643C76C2F6AC7190063DF6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1643C77D2F6AD0C50063DF6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		16ED663B2F6456080088248C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,7 +259,104 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		1643C7752F6AC7190063DF6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16ED663E2F6456080088248C /* Gallery App MVVM */;
+			targetProxy = 1643C7742F6AC7190063DF6D /* PBXContainerItemProxy */;
+		};
+		1643C7862F6AD0C50063DF6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16ED663E2F6456080088248C /* Gallery App MVVM */;
+			targetProxy = 1643C7852F6AD0C50063DF6D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		1643C7772F6AC7190063DF6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8HK3U4892;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = RomanM.testAddToFav;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gallery App MVVM.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gallery App MVVM";
+			};
+			name = Debug;
+		};
+		1643C7782F6AC7190063DF6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8HK3U4892;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = RomanM.testAddToFav;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gallery App MVVM.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gallery App MVVM";
+			};
+			name = Release;
+		};
+		1643C7882F6AD0C50063DF6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8HK3U4892;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = RomanM.TabBarTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gallery App MVVM.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gallery App MVVM";
+			};
+			name = Debug;
+		};
+		1643C7892F6AD0C50063DF6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U8HK3U4892;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = RomanM.TabBarTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Gallery App MVVM.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Gallery App MVVM";
+			};
+			name = Release;
+		};
 		16ED66562F6456090088248C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -336,6 +555,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1643C7762F6AC7190063DF6D /* Build configuration list for PBXNativeTarget "testAddToFav" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1643C7772F6AC7190063DF6D /* Debug */,
+				1643C7782F6AC7190063DF6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1643C7872F6AD0C50063DF6D /* Build configuration list for PBXNativeTarget "TabBarTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1643C7882F6AD0C50063DF6D /* Debug */,
+				1643C7892F6AD0C50063DF6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		16ED663A2F6456080088248C /* Build configuration list for PBXProject "Gallery App MVVM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
