@@ -120,7 +120,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				1643C86A2F6AFC2C0063DF6D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				16ED66412F6456080088248C /* Gallery App MVVM */,
@@ -213,10 +212,6 @@
 			isa = PBXTargetDependency;
 			target = 16ED663E2F6456080088248C /* Gallery App MVVM */;
 			targetProxy = 1643C7852F6AD0C50063DF6D /* PBXContainerItemProxy */;
-		};
-		1643C86A2F6AFC2C0063DF6D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 1643C8692F6AFC2C0063DF6D /* SwiftLintBuildToolPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -500,14 +495,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		1643C8692F6AFC2C0063DF6D /* SwiftLintBuildToolPlugin */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1643C81C2F6AF8590063DF6D /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
-			productName = "plugin:SwiftLintBuildToolPlugin";
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 16ED66372F6456080088248C /* Project object */;
 }
